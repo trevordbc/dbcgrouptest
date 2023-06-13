@@ -1,0 +1,15 @@
+.sgplayer-website-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 9999;
+}
+.sg-player-title, .sg-artwork-row, .sg-info-buy-now, .sg-gdpr, .sg-control-options {
+    display: none !important;
+}
+.sg-row-spacer {
+    padding-top: 5px !important;
+}
+.sg-row-spacer.sg-transport-row.sg-can-fade {
+    padding-top: 0px !important;
+}
