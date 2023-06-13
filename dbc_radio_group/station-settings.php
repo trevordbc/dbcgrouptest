@@ -17,6 +17,10 @@ function update_users_roles_based_on_stripe_status() {
     if (!empty($users->results)) {
         foreach ($users->results as $user) {
             $transaction_id = get_user_meta($user->ID, 'paygate_transaction_id', true);
+			$customer_id = get_stripe_customer_id($transaction_id);
+            if ($customer_id) {
+                update_user_meta($user->ID, 'stripe_customer_id', $customer_id);
+            }
             $subscription_status = get_subscription_status($transaction_id);
 
             // Update user role based on subscription status
@@ -124,6 +128,16 @@ function get_subscription_status($transaction_id) {
     }
 }
 
+function get_stripe_customer_id($transaction_id) {
+    try {
+        $charge = \Stripe\Charge::retrieve($transaction_id);
+        $customer_id = $charge->customer;
+        return $customer_id;
+    } catch (Exception $e) {
+        return '';
+    }
+}
+
 function paygate_page() {
     // Get the current page number
     $paged = isset($_GET['paged']) ? intval($_GET['paged']) : 1;
@@ -164,6 +178,7 @@ function paygate_page() {
     echo '<tr>';
     echo '<th>Email</th>';
     echo '<th>Subscription Status</th>';
+	echo '<th>Customer ID</th>';
     echo '</tr>';
     echo '</thead>';
     echo '<tbody>';
@@ -173,7 +188,10 @@ function paygate_page() {
         $email = $user->user_email;
 
         // Get the transaction ID from the user meta
-        $transaction_id = get_user_meta($user->ID, 'paygate_transaction_id', true);
+        $transaction_id = $user->paygate_transaction_id;
+		
+		//Get Customer ID
+		$customer_id = get_user_meta($user->ID, 'stripe_customer_id', true);
 
         // Fetch the subscription status using the transaction ID
         $subscription_status = get_subscription_status($transaction_id);
@@ -181,6 +199,7 @@ function paygate_page() {
         echo '<tr>';
         echo '<td>' . esc_html($email) . '</td>';
         echo '<td>' . esc_html($subscription_status) . '</td>';
+		echo '<td>' . esc_html($customer_id) . '</td>';
         echo '</tr>';
     }
 
@@ -276,6 +295,73 @@ function paygate_settings_page() {
         </form>
     </div>
     <?php
+}
+function manage_billing_shortcode() {
+    if (is_user_logged_in()) {
+        $user = wp_get_current_user();
+        $user_roles = $user->roles;
+        $allowed_roles = array('administrator', 'p1', 'market_manager');
+
+        if (array_intersect($user_roles, $allowed_roles)) {
+            $customer_id = get_user_meta($user->ID, 'stripe_customer_id', true);
+
+            if ($customer_id) {
+                $billing_link = generate_billing_update_link($customer_id);
+                return '<a href="' . esc_url($billing_link) . '">Manage Billing</a>';
+            }
+        }
+    } else {
+		echo '<a href="/up1-login">Login</a> | <a href="/join-the-ultimate-p1-club">Register</a>';
+	}
+
+    return '';
+}
+function custom_login_shortcode() {
+    if (is_user_logged_in()) {
+        return 'You are already logged in.';
+    }
+
+    ob_start();
+    ?>
+    <div class="custom-login-form">
+        <?php
+        wp_login_form(
+            array(
+                'redirect' => site_url(),
+                'form_id' => 'custom-login-form',
+                'label_username' => __('Username', 'text-domain'),
+                'label_password' => __('Password', 'text-domain'),
+                'label_remember' => __('Remember Me', 'text-domain'),
+                'label_log_in' => __('Log In', 'text-domain'),
+                'remember' => true,
+            )
+        );
+        ?>
+
+        <div class="custom-login-links">
+            <a href="<?php echo wp_lostpassword_url(); ?>">
+                <?php _e('Forgot Your Password?', 'text-domain'); ?>
+            </a>
+        </div>
+    </div>
+    <?php
+
+    return ob_get_clean();
+}
+add_shortcode('custom_login', 'custom_login_shortcode');
+add_shortcode('manage_billing', 'manage_billing_shortcode');
+function generate_billing_update_link($customer_id) {
+    $stripe_account_id = 'acct_1DTFMFGmc1YwVKim'; // Replace with your Stripe account ID
+    $return_url = 'https://2guysnamedchris.com/account'; // Replace with your desired return URL
+
+    $link_params = array(
+        'customer' => $customer_id,
+        'return_url' => $return_url,
+    );
+
+    $url = "https://billing.stripe.com/session/update_billing?".http_build_query($link_params);
+
+    return $url;
 }
 
 function station_settings_user_roles_callback() {

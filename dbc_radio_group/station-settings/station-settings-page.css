@@ -1,0 +1,46 @@
+.wrap {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.station-settings-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.station-settings-section {
+  flex: 1;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: 15px;
+}
+
+.station-settings-section h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.5em;
+}
+
+.form-table {
+  width: 100%;
+}
+
+.form-table th {
+  font-weight: bold;
+  padding: 8px 0;
+  width: 30%;
+}
+
+.form-table td {
+  padding: 8px 10px;
+}
+
+.regular-text,
+textarea {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}

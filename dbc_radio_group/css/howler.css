@@ -1,0 +1,231 @@
+.dbc-single-podcast-holder {
+	width: 100%;
+	max-width: 1400px;
+	margin: 0px auto;
+	box-sizing: border-box;
+}
+.dbc-single-podcast {
+	float: left;
+	width: 33.33%;
+	padding: 10px;
+}
+.dbc-single-podcast {
+	float: left;
+	width: 33.33%;
+	padding: 10px;
+  	overflow: hidden;
+}
+.dbc-single-podcast-spacer {
+	margin: 10px;
+	box-shadow: 1px 0px 10px rgba(000,000,000,.3);
+	background: #bb71f3;
+  	background: -moz-linear-gradient(-45deg, #bb71f3 0%, #3d4d91 100%);
+  	background: -webkit-linear-gradient(-45deg, #bb71f3 0%, #3d4d91 100%);
+  	background: linear-gradient(135deg, #bb71f3 0%, #3d4d91 100%);
+  	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#bb71f3', endColorstr='#3d4d91', GradientType=1);
+  	font-family: "Helvetica Neue", "Futura", "Trebuchet MS", Arial;
+  	-webkit-user-select: none;
+  	user-select: none;
+  	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+.dbc-single-podcast-holder:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+/* Top Info */
+#title {
+}
+/* Controls */
+.controlsOuter {
+}
+.controlsInner {
+
+}
+.btn {
+  cursor: pointer;
+  opacity: 0.9;
+  -webkit-filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.33));
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.33));
+  -webkit-user-select: none;
+  user-select: none;
+}
+.btn:hover {
+  opacity: 1;
+}
+#playBtn  i {
+  width: 40px;
+  height: 41px;
+}
+#pauseBtn, #playBtn, #volumeBtn {
+	color: #FFF;
+}
+#pauseBtn {
+  display: none;
+}
+#pauseBtn i {
+  width: 40px;
+  height: 41px;
+}
+#volumeBtn i {
+  width: 35px;
+  height: 35px;
+}
+
+/* Loading */
+#loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -35px;
+  width: 70px;
+  height: 70px;
+  background-color: #fff;
+  border-radius: 100%;  
+  -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+  animation: sk-scaleout 1.0s infinite ease-in-out;
+  display: none;
+}
+@-webkit-keyframes sk-scaleout {
+  0% { -webkit-transform: scale(0) }
+  100% {
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+  }
+}
+@keyframes sk-scaleout {
+  0% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 100% {
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+/* Plylist */
+#playlist {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+}
+#list {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.list-song {
+  width: 100%;
+  height: 120px;
+  font-size: 50px;
+  line-height: 120px;
+  text-align: center;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.33);
+}
+.list-song:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+/* Volume */
+#volume {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  touch-action: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  display: none;
+}
+.bar {
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  margin: -5px auto;
+  height: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.33);
+}
+#barEmpty {
+  width: 90%;
+  opacity: 0.5;
+  box-shadow: none;
+  cursor: pointer;
+}
+#barFull {
+  width: 90%;
+}
+#sliderBtn {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 50%;
+  left: 93.25%;
+  margin: -25px auto;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.33);
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+/* Fade-In */
+.fadeout {
+  webkit-animation: fadeout 0.5s;
+  -ms-animation: fadeout 0.5s;
+  animation: fadeout 0.5s;
+}
+.fadein {
+  webkit-animation: fadein 0.5s;
+  -ms-animation: fadein 0.5s;
+  animation: fadein 0.5s;
+}
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@-webkit-keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@-ms-keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fadeout {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+@-webkit-keyframes fadeout {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+@-ms-keyframes fadeout {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
